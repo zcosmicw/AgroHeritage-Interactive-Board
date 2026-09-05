@@ -1,0 +1,156 @@
+{
+  "id": "ERA_2_DECCAN_1972",
+  "name": "The Deccan Famine",
+  "year": "1972–1973",
+  "region": "Maharashtra / Deccan Plateau (Marathwada, Vidarbha)",
+  "historicalContext": "Severe drought across the Deccan Plateau. Maharashtra declared famine conditions. 25 million people affected. Massive cattle death. Government launched Employment Guarantee Scheme (precursor to MGNREGA).",
+
+  "duration": { "prepMinutes": 10, "calamityMinutes": 5, "totalMinutes": 15 },
+
+  "environment": {
+    "baseRainfall": 0.50,
+    "baseTemperature": 40,
+    "waterEvaporationRate": 1.5,
+    "aquiferRechargeRate": 0.5,
+    "canalSupply": 0.40,
+    "reservoirLevel": 0.30,
+    "windSpeed": 20,
+    "salinityBaseline": 2.0
+  },
+
+  "startingResources": {
+    "playerCash": 600,
+    "playerFood": 75,
+    "playerWater": 50,
+    "playerSoilHealth": 65,
+    "sharedAquifer": 55,
+    "sharedCanal": 40,
+    "cattle": { "alive": true, "health": 100, "fodderNeedPerMin": 2, "waterNeedPerMin": 1 }
+  },
+
+  "availableCrops": [
+    {
+      "id": "jowar",
+      "name": "Jowar (Sorghum)",
+      "hindiName": "ज्वार",
+      "category": "INDIGENOUS",
+      "seedCost": 30,
+      "waterNeed": 0.9,
+      "chemFertNeed": 0,
+      "baseYield": 130,
+      "resilienceScore": 82,
+      "growthTimeSeconds": 170,
+      "saltTolerance": 5,
+      "droughtTolerance": 0.80,
+      "historicalNote": "Staple food of the Deccan. Maharashtra's primary kharif crop. Survives on stored soil moisture alone."
+    },
+    {
+      "id": "bajra",
+      "name": "Bajra (Pearl Millet)",
+      "hindiName": "बाजरा",
+      "category": "INDIGENOUS",
+      "seedCost": 28,
+      "waterNeed": 0.8,
+      "chemFertNeed": 0,
+      "baseYield": 115,
+      "resilienceScore": 85,
+      "growthTimeSeconds": 175,
+      "saltTolerance": 6,
+      "droughtTolerance": 0.85,
+      "historicalNote": "Grown on marginal black-cotton soils of Vidarbha. Critical backup when jowar fails."
+    },
+    {
+      "id": "tur_dal",
+      "name": "Tur Dal (Pigeon Pea)",
+      "hindiName": "तुअर दाल (अरहर)",
+      "category": "INDIGENOUS",
+      "seedCost": 35,
+      "waterNeed": 1.0,
+      "chemFertNeed": 0,
+      "baseYield": 110,
+      "resilienceScore": 75,
+      "growthTimeSeconds": 210,
+      "saltTolerance": 4,
+      "droughtTolerance": 0.70,
+      "historicalNote": "Nitrogen-fixing legume. Improves soil health. Traditional intercrop with jowar in the Deccan system."
+    },
+    {
+      "id": "groundnut",
+      "name": "Groundnut",
+      "hindiName": "मूंगफली",
+      "category": "COMMERCIAL",
+      "seedCost": 50,
+      "waterNeed": 1.8,
+      "chemFertNeed": 0.5,
+      "baseYield": 200,
+      "resilienceScore": 40,
+      "growthTimeSeconds": 200,
+      "saltTolerance": 3,
+      "droughtTolerance": 0.35,
+      "historicalNote": "Cash crop of Marathwada. Needs timely rain at pegging stage. Total failure in 1972 drought."
+    },
+    {
+      "id": "cotton",
+      "name": "Cotton (Desi)",
+      "hindiName": "कपास (देसी)",
+      "category": "COMMERCIAL",
+      "seedCost": 65,
+      "waterNeed": 2.5,
+      "chemFertNeed": 1.0,
+      "baseYield": 280,
+      "resilienceScore": 20,
+      "growthTimeSeconds": 250,
+      "saltTolerance": 3,
+      "droughtTolerance": 0.20,
+      "historicalNote": "Vidarbha's cotton belt. High water demand made it devastating during the drought. Many cotton farmers lost everything."
+    },
+    {
+      "id": "hybrid_paddy",
+      "name": "Hybrid Paddy",
+      "hindiName": "संकर धान",
+      "category": "COMMERCIAL",
+      "seedCost": 85,
+      "waterNeed": 3.5,
+      "chemFertNeed": 2.0,
+      "baseYield": 360,
+      "resilienceScore": 8,
+      "growthTimeSeconds": 240,
+      "saltTolerance": 2,
+      "droughtTolerance": 0.08,
+      "historicalNote": "Attempted in canal-irrigated patches. Catastrophic failure when canals dried up. Wasted precious resources."
+    }
+  ],
+
+  "disaster": {
+    "name": "Groundwater Collapse & Cattle Death — भूजल संकट",
+    "triggerDescription": "Wells across the Deccan run dry. Bore wells fail at 200ft depth. Cattle begin dying of thirst and starvation. Migration columns form on highways.",
+    "mechanics": {
+      "cattleFodderNeed": 2,
+      "cattleWaterNeed": 1,
+      "cattleDeathThreshold": 0,
+      "plotPrepMultiplierIfCattleDead": 2.0,
+      "wellPumpCostMultiplier": 2.0,
+      "salinizationChance": 0.30,
+      "yieldPenalties": {
+        "COMMERCIAL": 0.10,
+        "INDIGENOUS": 0.50
+      },
+      "specialRules": [
+        "Cattle need 2 fodder + 1 water per minute or lose 15 health/min",
+        "If cattle die, plot preparation takes 2x longer (no bullocks for plowing)",
+        "Each well pump costs 2x normal water",
+        "30% chance of salinization per excess pump cycle",
+        "Jowar+Tur intercrop combo gives +20% yield bonus"
+      ]
+    }
+  },
+
+  "marketPrices": {
+    "jowar": { "base": 48, "volatility": 0.12 },
+    "bajra": { "base": 44, "volatility": 0.10 },
+    "tur_dal": { "base": 62, "volatility": 0.18 },
+    "groundnut": { "base": 75, "volatility": 0.25 },
+    "cotton": { "base": 95, "volatility": 0.30 },
+    "hybrid_paddy": { "base": 88, "volatility": 0.28 }
+  }
+}

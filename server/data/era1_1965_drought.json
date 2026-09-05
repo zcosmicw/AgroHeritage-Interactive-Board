@@ -1,0 +1,151 @@
+{
+  "id": "ERA_1_DROUGHT_1965",
+  "name": "The Great Drought",
+  "year": "1965–1966",
+  "region": "Central & North India (UP, Bihar, Rajasthan, MP)",
+  "historicalContext": "Two consecutive monsoon failures. Food grain production fell 20%. India imported 10 million tonnes under PL-480. Near-famine in Bihar. Catalyzed the Green Revolution.",
+
+  "duration": { "prepMinutes": 10, "calamityMinutes": 5, "totalMinutes": 15 },
+
+  "environment": {
+    "baseRainfall": 0.40,
+    "baseTemperature": 42,
+    "waterEvaporationRate": 1.8,
+    "aquiferRechargeRate": 0.3,
+    "canalSupply": 0.60,
+    "reservoirLevel": 0.35,
+    "windSpeed": 25,
+    "salinityBaseline": 1.0
+  },
+
+  "startingResources": {
+    "playerCash": 500,
+    "playerFood": 80,
+    "playerWater": 60,
+    "playerSoilHealth": 72,
+    "sharedAquifer": 70,
+    "sharedCanal": 60
+  },
+
+  "availableCrops": [
+    {
+      "id": "bajra",
+      "name": "Bajra (Pearl Millet)",
+      "hindiName": "बाजरा",
+      "category": "INDIGENOUS",
+      "seedCost": 30,
+      "waterNeed": 0.8,
+      "chemFertNeed": 0,
+      "baseYield": 120,
+      "resilienceScore": 85,
+      "growthTimeSeconds": 180,
+      "saltTolerance": 6,
+      "droughtTolerance": 0.85,
+      "historicalNote": "Primary Kharif crop of Rajasthan & UP. Thrives in sandy, shallow soils with minimal water. Saved millions during the drought."
+    },
+    {
+      "id": "ragi",
+      "name": "Ragi (Finger Millet)",
+      "hindiName": "रागी (मडुआ)",
+      "category": "INDIGENOUS",
+      "seedCost": 25,
+      "waterNeed": 0.7,
+      "chemFertNeed": 0,
+      "baseYield": 100,
+      "resilienceScore": 90,
+      "growthTimeSeconds": 200,
+      "saltTolerance": 4,
+      "droughtTolerance": 0.90,
+      "historicalNote": "Grown in dryland Bihar & MP. Highest calcium content of any cereal. Could grow where nothing else survived."
+    },
+    {
+      "id": "jowar",
+      "name": "Jowar (Sorghum)",
+      "hindiName": "ज्वार",
+      "category": "INDIGENOUS",
+      "seedCost": 28,
+      "waterNeed": 0.9,
+      "chemFertNeed": 0,
+      "baseYield": 130,
+      "resilienceScore": 80,
+      "growthTimeSeconds": 170,
+      "saltTolerance": 5,
+      "droughtTolerance": 0.80,
+      "historicalNote": "Major food crop of semi-arid Central India. Dual-purpose: grain for humans, stalks as cattle fodder."
+    },
+    {
+      "id": "wheat_local",
+      "name": "Desi Wheat (Local Variety)",
+      "hindiName": "देसी गेहूं",
+      "category": "INDIGENOUS",
+      "seedCost": 35,
+      "waterNeed": 1.5,
+      "chemFertNeed": 0,
+      "baseYield": 140,
+      "resilienceScore": 50,
+      "growthTimeSeconds": 220,
+      "saltTolerance": 4,
+      "droughtTolerance": 0.45,
+      "historicalNote": "Traditional wheat varieties grown pre-Green Revolution. Moderate yield but needed more water than millets."
+    },
+    {
+      "id": "hybrid_paddy",
+      "name": "Hybrid Paddy (IR-8 Prototype)",
+      "hindiName": "संकर धान",
+      "category": "COMMERCIAL",
+      "seedCost": 80,
+      "waterNeed": 3.5,
+      "chemFertNeed": 2.0,
+      "baseYield": 350,
+      "resilienceScore": 10,
+      "growthTimeSeconds": 240,
+      "saltTolerance": 2,
+      "droughtTolerance": 0.10,
+      "historicalNote": "Early HYV rice being trialed. Massive yield under perfect irrigation but catastrophic failure without water. The 1965 drought proved this vulnerability."
+    },
+    {
+      "id": "sugarcane",
+      "name": "Sugarcane",
+      "hindiName": "गन्ना",
+      "category": "COMMERCIAL",
+      "seedCost": 100,
+      "waterNeed": 4.0,
+      "chemFertNeed": 2.5,
+      "baseYield": 400,
+      "resilienceScore": 5,
+      "growthTimeSeconds": 280,
+      "saltTolerance": 3,
+      "droughtTolerance": 0.05,
+      "historicalNote": "Water-guzzling cash crop. In 1965, sugarcane fields dried to husks while millet farmers survived. The ultimate gamble."
+    }
+  ],
+
+  "disaster": {
+    "name": "Monsoon Failure — महा सूखा",
+    "triggerDescription": "The skies refuse to break. IMD records -60% rainfall. Wells run dry. Dust storms sweep the plains.",
+    "mechanics": {
+      "rainfallMultiplier": 0.40,
+      "waterReplenishmentMultiplier": 0.40,
+      "yieldPenalties": {
+        "COMMERCIAL": 0.15,
+        "INDIGENOUS": 0.45
+      },
+      "soilMoistureDrain": 2.5,
+      "specialRules": [
+        "Crops with waterNeed > 2.0 lose 85% yield",
+        "Crops with droughtTolerance > 0.70 survive at 45% yield",
+        "Aquifer recharge drops to 30% of normal",
+        "Food consumption increases 20% (heat stress on family)"
+      ]
+    }
+  },
+
+  "marketPrices": {
+    "bajra": { "base": 42, "volatility": 0.10 },
+    "ragi": { "base": 38, "volatility": 0.08 },
+    "jowar": { "base": 45, "volatility": 0.12 },
+    "wheat_local": { "base": 55, "volatility": 0.15 },
+    "hybrid_paddy": { "base": 85, "volatility": 0.30 },
+    "sugarcane": { "base": 110, "volatility": 0.35 }
+  }
+}

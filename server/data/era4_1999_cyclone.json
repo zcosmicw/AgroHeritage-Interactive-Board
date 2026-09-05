@@ -1,0 +1,157 @@
+{
+  "id": "ERA_4_CYCLONE_1999",
+  "name": "The Super Cyclone",
+  "year": "1999",
+  "region": "Coastal Odisha (Paradip, Erasama, Jagatsinghpur)",
+  "historicalContext": "The deadliest cyclone in India's recorded history. 260 km/h winds. 7-meter storm surge. 10,000+ deaths. 15 million people displaced. Entire coastline devastated. Salt water intrusion destroyed farmland for years.",
+
+  "duration": { "prepMinutes": 10, "calamityMinutes": 5, "totalMinutes": 15 },
+
+  "environment": {
+    "baseRainfall": 3.0,
+    "baseTemperature": 28,
+    "waterEvaporationRate": 0.5,
+    "aquiferRechargeRate": 2.0,
+    "canalSupply": 0.80,
+    "reservoirLevel": 0.90,
+    "windSpeed": 260,
+    "salinityBaseline": 1.5
+  },
+
+  "startingResources": {
+    "playerCash": 800,
+    "playerFood": 85,
+    "playerWater": 90,
+    "playerSoilHealth": 60,
+    "sharedAquifer": 80,
+    "sharedCanal": 75,
+    "cattle": { "alive": true, "health": 90, "fodderNeedPerMin": 2, "waterNeedPerMin": 0.5 }
+  },
+
+  "availableCrops": [
+    {
+      "id": "pokkali_rice",
+      "name": "Pokkali Rice (Salt-Tolerant)",
+      "hindiName": "पोक्काली चावल",
+      "category": "INDIGENOUS",
+      "seedCost": 45,
+      "waterNeed": 2.0,
+      "chemFertNeed": 0,
+      "baseYield": 140,
+      "resilienceScore": 95,
+      "growthTimeSeconds": 200,
+      "saltTolerance": 15,
+      "droughtTolerance": 0.30,
+      "historicalNote": "Ancient Kerala rice variety that thrives in saltwater-flooded fields. The ONLY crop that can survive a cyclone storm surge. GI-tagged heritage variety."
+    },
+    {
+      "id": "standard_paddy",
+      "name": "Standard Paddy",
+      "hindiName": "साधारण धान",
+      "category": "INDIGENOUS",
+      "seedCost": 35,
+      "waterNeed": 2.5,
+      "chemFertNeed": 0.5,
+      "baseYield": 180,
+      "resilienceScore": 45,
+      "growthTimeSeconds": 190,
+      "saltTolerance": 4,
+      "droughtTolerance": 0.25,
+      "historicalNote": "Odisha's staple rice. Tolerates flooding but NOT saltwater intrusion. Pre-cyclone staple that was wiped out."
+    },
+    {
+      "id": "coconut",
+      "name": "Coconut Palm",
+      "hindiName": "नारियल",
+      "category": "INDIGENOUS",
+      "seedCost": 60,
+      "waterNeed": 1.5,
+      "chemFertNeed": 0,
+      "baseYield": 160,
+      "resilienceScore": 55,
+      "growthTimeSeconds": 250,
+      "saltTolerance": 8,
+      "droughtTolerance": 0.50,
+      "historicalNote": "Coastal Odisha plantation crop. Moderate salt tolerance but 260 km/h winds snap trunks. Bunds offer partial protection."
+    },
+    {
+      "id": "betel_vine",
+      "name": "Betel Vine (Paan)",
+      "hindiName": "पान",
+      "category": "COMMERCIAL",
+      "seedCost": 40,
+      "waterNeed": 1.2,
+      "chemFertNeed": 0,
+      "baseYield": 200,
+      "resilienceScore": 10,
+      "growthTimeSeconds": 160,
+      "saltTolerance": 2,
+      "droughtTolerance": 0.15,
+      "historicalNote": "Odisha's famous paan cultivation. Delicate creeper destroyed by both wind and salt spray. Total loss in 1999."
+    },
+    {
+      "id": "hybrid_paddy",
+      "name": "Hybrid Paddy (Swarna)",
+      "hindiName": "संकर धान (स्वर्णा)",
+      "category": "COMMERCIAL",
+      "seedCost": 90,
+      "waterNeed": 3.5,
+      "chemFertNeed": 2.0,
+      "baseYield": 400,
+      "resilienceScore": 5,
+      "growthTimeSeconds": 240,
+      "saltTolerance": 2,
+      "droughtTolerance": 0.10,
+      "historicalNote": "High-yield variety pushed by government. Zero salt tolerance. Chemical fertilizer + saltwater = toxic soil. Maximum damage crop."
+    },
+    {
+      "id": "vegetables",
+      "name": "Mixed Vegetables",
+      "hindiName": "सब्जियाँ",
+      "category": "COMMERCIAL",
+      "seedCost": 55,
+      "waterNeed": 2.0,
+      "chemFertNeed": 1.0,
+      "baseYield": 250,
+      "resilienceScore": 15,
+      "growthTimeSeconds": 150,
+      "saltTolerance": 2,
+      "droughtTolerance": 0.20,
+      "historicalNote": "Kitchen gardens and market vegetables. Completely destroyed by storm surge flooding and salt contamination."
+    }
+  ],
+
+  "disaster": {
+    "name": "Storm Surge & Salinity Spike — महा चक्रवात",
+    "triggerDescription": "The sky turns black. 260 km/h winds howl. A 7-meter wall of saltwater crashes inland. Everything in its path is destroyed. The salt remains long after the water recedes.",
+    "mechanics": {
+      "salinitySpike": { "min": 12, "max": 16 },
+      "windDamageThreshold": 200,
+      "floodingDepth": 7,
+      "cattleFloodDeathChance": 0.70,
+      "infrastructureDamagePercent": 50,
+      "yieldPenalties": {
+        "COMMERCIAL": 0.0,
+        "INDIGENOUS": 0.40
+      },
+      "specialRules": [
+        "Salinity spikes to 12-16 dS/m across all plots",
+        "If crop.saltTolerance < plot.salinity → yield = 0 (immediate salt rot)",
+        "Pokkali Rice survives up to 15 dS/m at 60% yield",
+        "If plot.hasBund → salinity reduced by 40% (bund blocks surge)",
+        "70% chance cattle dies from flooding",
+        "All non-bunded plots flooded — 50% cash lost to infrastructure damage",
+        "Wind destroys crops with resilienceScore < 40 even behind bunds"
+      ]
+    }
+  },
+
+  "marketPrices": {
+    "pokkali_rice": { "base": 65, "volatility": 0.10 },
+    "standard_paddy": { "base": 48, "volatility": 0.15 },
+    "coconut": { "base": 55, "volatility": 0.12 },
+    "betel_vine": { "base": 90, "volatility": 0.25 },
+    "hybrid_paddy": { "base": 95, "volatility": 0.30 },
+    "vegetables": { "base": 70, "volatility": 0.20 }
+  }
+}

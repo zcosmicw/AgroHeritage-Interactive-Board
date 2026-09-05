@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Krishi Yuddh — कृषि युद्ध | The Farming Battle</title>
+  <meta name="description" content="A competitive 2-player real-time agricultural survival game simulating India's worst historical farming crises. Can you survive droughts, cyclones, and famine through sustainable farming?" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌾</text></svg>" />
+  <link rel="stylesheet" href="/src/styles/main.css" />
+</head>
+<body>
+  <div id="app">
+
+    <!-- LOBBY SCREEN -->
+    <div id="screen-lobby" class="screen lobby active">
+      <div class="lobby__title">
+        <h1>🌾 KRISHI YUDDH 🌾</h1>
+        <span class="hindi">कृषि युद्ध</span>
+        <span class="tagline">The Farming Battle — Survive India's Worst Crises</span>
+      </div>
+
+      <div class="lobby__card">
+        <!-- Mode Selection -->
+        <div class="mode-select">
+          <button id="btn-mode-1p" class="mode-btn selected" type="button">
+            <span class="mode-btn__icon">🧑‍🌾</span>
+            <span class="mode-btn__label">1 Player</span>
+            <span class="mode-btn__sub">vs AI</span>
+          </button>
+          <button id="btn-mode-2p" class="mode-btn" type="button">
+            <span class="mode-btn__icon">👥</span>
+            <span class="mode-btn__label">2 Players</span>
+            <span class="mode-btn__sub">Online</span>
+          </button>
+        </div>
+
+        <!-- Player Name -->
+        <div class="form-group">
+          <label class="form-label" for="input-name">Your Name</label>
+          <input id="input-name" class="form-input" type="text" placeholder="Enter your farmer name..." maxlength="20" value="" autocomplete="off" />
+        </div>
+
+        <!-- Duration -->
+        <div class="form-group">
+          <label class="form-label">Match Duration</label>
+          <div class="duration-select">
+            <button id="btn-duration-demo" class="duration-btn" type="button">Demo<br><small>6 min</small></button>
+            <button id="btn-duration-quick" class="duration-btn selected" type="button">Quick<br><small>12 min</small></button>
+            <button id="btn-duration-full" class="duration-btn" type="button">Full<br><small>60 min</small></button>
+          </div>
+        </div>
+
+        <!-- Create Game -->
+        <button id="btn-create" class="btn-primary" type="button">Create Game</button>
+
+        <!-- Divider -->
+        <div class="lobby__divider">or join a room</div>
+
+        <!-- Join Section -->
+        <div class="join-section">
+          <input id="input-room-code" class="form-input" type="text" placeholder="ROOM CODE" maxlength="5" autocomplete="off" />
+          <button id="btn-join" class="btn-secondary" type="button">Join</button>
+        </div>
+
+        <!-- Waiting State -->
+        <div id="waiting-state" class="waiting-state">
+          <div class="waiting-state__spinner"></div>
+          <div class="waiting-state__label">Waiting for opponent...</div>
+          <div class="waiting-state__code" id="room-code-display"></div>
+          <div class="waiting-state__label">Share this code!</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GAME SCREEN -->
+    <div id="screen-game" class="screen game-screen">
+      <!-- Top Bar -->
+      <div class="game__topbar">
+        <span class="game__topbar-title">KRISHI YUDDH</span>
+        <span class="game__topbar-era" id="topbar-era">Era 1: The Great Drought</span>
+        <div class="game__topbar-progress">
+          <div class="game__topbar-progress-fill" id="topbar-progress" style="width: 0%"></div>
+        </div>
+        <span class="game__topbar-timer" id="topbar-timer">00:00</span>
+      </div>
+
+      <!-- Main Area (split screen) -->
+      <div class="game__main">
+        <!-- Player 1 Panel -->
+        <div class="player-panel p1" id="panel-p1">
+          <div class="player-panel__header">
+            <span class="player-panel__name" id="p1-name">Player 1</span>
+            <span class="player-panel__score" id="p1-score">0</span>
+          </div>
+          <div class="plot-grid" id="p1-plots"></div>
+          <div class="resources" id="p1-resources"></div>
+          <div class="crop-selector" id="p1-crop-selector"></div>
+        </div>
+
+        <!-- Center Panel -->
+        <div class="center-panel">
+          <div id="disaster-alert" class="disaster-alert">
+            <div class="disaster-alert__name" id="disaster-name"></div>
+            <div class="disaster-alert__desc" id="disaster-desc"></div>
+          </div>
+
+          <div class="center-panel__section">
+            <div class="center-panel__title">🌍 Shared Resources</div>
+            <div class="shared-resources" id="shared-resources"></div>
+          </div>
+
+          <div class="center-panel__section">
+            <div class="center-panel__title">📊 Market Prices</div>
+            <div class="market-prices" id="market-prices"></div>
+          </div>
+
+          <div class="center-panel__section">
+            <div class="center-panel__title">📋 Events</div>
+            <div class="event-log" id="event-log"></div>
+          </div>
+        </div>
+
+        <!-- Player 2 Panel -->
+        <div class="player-panel p2" id="panel-p2">
+          <div class="player-panel__header">
+            <span class="player-panel__name" id="p2-name">Player 2</span>
+            <span class="player-panel__score" id="p2-score">0</span>
+          </div>
+          <div class="plot-grid" id="p2-plots"></div>
+          <div class="resources" id="p2-resources"></div>
+          <div class="crop-selector" id="p2-crop-selector"></div>
+        </div>
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="game__bottombar">
+        <div class="game__bottombar-item">⏱ <span id="bottombar-elapsed">0:00</span></div>
+        <div class="game__bottombar-item">Speed: <span id="bottombar-speed">1x</span></div>
+        <div class="game__bottombar-item">Era: <span id="bottombar-era">1/4</span></div>
+        <div class="game__bottombar-item" id="bottombar-cattle"></div>
+        <div class="game__bottombar-item">Room: <span id="bottombar-room">—</span></div>
+        <div class="controls-help">
+          <span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> Move</span>
+          <span><kbd>1</kbd> Prep/Sow</span>
+          <span><kbd>2</kbd> Water</span>
+          <span><kbd>3</kbd> Fertilize</span>
+          <span><kbd>4</kbd> Harvest</span>
+          <span><kbd>Q</kbd> Cycle Crop</span>
+          <span><kbd>E</kbd> Bund</span>
+          <span><kbd>R</kbd> Compost</span>
+          <span><kbd>Space</kbd> Pause</span>
+          <span><kbd>T</kbd> Speed</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- GAME OVER SCREEN -->
+    <div id="screen-gameover" class="screen gameover">
+      <div class="gameover__title">
+        <h2>🌾 Game Over 🌾</h2>
+        <div class="gameover__winner" id="gameover-winner"></div>
+      </div>
+      <div class="gameover__scores" id="gameover-scores"></div>
+      <div class="gameover__lesson" id="gameover-lesson">
+        <h3>📜 Historical Lesson</h3>
+        <p id="gameover-lesson-text"></p>
+      </div>
+      <button id="btn-play-again" class="btn-play-again" type="button">Play Again</button>
+    </div>
+
+    <!-- ERA TRANSITION OVERLAY -->
+    <div id="era-transition" class="era-transition">
+      <div class="era-transition__year" id="era-year"></div>
+      <div class="era-transition__name" id="era-name"></div>
+      <div class="era-transition__region" id="era-region"></div>
+      <div class="era-transition__context" id="era-context"></div>
+    </div>
+
+    <!-- CRISIS MODAL -->
+    <div id="crisis-modal" class="crisis-modal">
+      <div class="crisis-modal__icon" id="crisis-icon">⚠️</div>
+      <div class="crisis-modal__title" id="crisis-title"></div>
+      <div class="crisis-modal__desc" id="crisis-desc-text"></div>
+    </div>
+
+    <!-- WEATHER EFFECTS -->
+    <div id="weather-dust" class="weather-dust"></div>
+    <div id="weather-rain" class="weather-rain"></div>
+  </div>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

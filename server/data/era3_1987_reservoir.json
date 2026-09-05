@@ -1,0 +1,156 @@
+{
+  "id": "ERA_3_RESERVOIR_1987",
+  "name": "The Reservoir Drought",
+  "year": "1987",
+  "region": "Pan-India (El Niño event, 300M+ affected)",
+  "historicalContext": "El Niño-driven drought. 19% rainfall deficit nationwide. Reservoirs at 15%. Complete canal shutdowns. 300 million people affected. Exposed India's dangerous dependence on chemical-intensive Green Revolution agriculture.",
+
+  "duration": { "prepMinutes": 10, "calamityMinutes": 5, "totalMinutes": 15 },
+
+  "environment": {
+    "baseRainfall": 0.81,
+    "baseTemperature": 38,
+    "waterEvaporationRate": 1.4,
+    "aquiferRechargeRate": 0.4,
+    "canalSupply": 0.0,
+    "reservoirLevel": 0.15,
+    "windSpeed": 15,
+    "salinityBaseline": 1.5
+  },
+
+  "startingResources": {
+    "playerCash": 700,
+    "playerFood": 70,
+    "playerWater": 55,
+    "playerSoilHealth": 58,
+    "sharedAquifer": 60,
+    "sharedCanal": 0,
+    "cattle": { "alive": true, "health": 80, "fodderNeedPerMin": 2, "waterNeedPerMin": 1.5 }
+  },
+
+  "availableCrops": [
+    {
+      "id": "bajra",
+      "name": "Bajra (Pearl Millet)",
+      "hindiName": "बाजरा",
+      "category": "INDIGENOUS",
+      "seedCost": 32,
+      "waterNeed": 0.8,
+      "chemFertNeed": 0,
+      "baseYield": 125,
+      "resilienceScore": 85,
+      "growthTimeSeconds": 175,
+      "saltTolerance": 6,
+      "droughtTolerance": 0.85,
+      "historicalNote": "Still the survivor. Bajra proved its worth yet again during the 1987 drought across Rajasthan."
+    },
+    {
+      "id": "jowar",
+      "name": "Jowar (Sorghum)",
+      "hindiName": "ज्वार",
+      "category": "INDIGENOUS",
+      "seedCost": 30,
+      "waterNeed": 0.9,
+      "chemFertNeed": 0,
+      "baseYield": 130,
+      "resilienceScore": 80,
+      "growthTimeSeconds": 170,
+      "saltTolerance": 5,
+      "droughtTolerance": 0.80,
+      "historicalNote": "Dual-purpose grain and fodder crop. Critical for keeping cattle alive during canal shutdowns."
+    },
+    {
+      "id": "arhar_tur",
+      "name": "Arhar / Tur (Pigeon Pea)",
+      "hindiName": "अरहर / तुअर",
+      "category": "INDIGENOUS",
+      "seedCost": 38,
+      "waterNeed": 1.0,
+      "chemFertNeed": 0,
+      "baseYield": 115,
+      "resilienceScore": 72,
+      "growthTimeSeconds": 200,
+      "saltTolerance": 4,
+      "droughtTolerance": 0.70,
+      "historicalNote": "Nitrogen-fixing pulse. Deep root system reaches moisture 2 meters down. Improves soil health naturally."
+    },
+    {
+      "id": "hyv_wheat",
+      "name": "HYV Wheat (Kalyan Sona)",
+      "hindiName": "उन्नत गेहूं (कल्याण सोना)",
+      "category": "COMMERCIAL",
+      "seedCost": 60,
+      "waterNeed": 2.2,
+      "chemFertNeed": 1.8,
+      "baseYield": 300,
+      "resilienceScore": 25,
+      "growthTimeSeconds": 220,
+      "saltTolerance": 3,
+      "droughtTolerance": 0.20,
+      "historicalNote": "Green Revolution wheat. Needs 4-6 irrigations. Without canal water in 1987, yields crashed. Chemical fertilizer without water caused soil burn."
+    },
+    {
+      "id": "hyv_rice",
+      "name": "HYV Rice (IR-36)",
+      "hindiName": "उन्नत धान (IR-36)",
+      "category": "COMMERCIAL",
+      "seedCost": 75,
+      "waterNeed": 3.5,
+      "chemFertNeed": 2.0,
+      "baseYield": 380,
+      "resilienceScore": 10,
+      "growthTimeSeconds": 240,
+      "saltTolerance": 2,
+      "droughtTolerance": 0.08,
+      "historicalNote": "Standing water crop. Impossible without canal supply. The 1987 canal shutdown made HYV rice cultivation suicidal."
+    },
+    {
+      "id": "cotton_hybrid",
+      "name": "Hybrid Cotton (H4)",
+      "hindiName": "संकर कपास (H4)",
+      "category": "COMMERCIAL",
+      "seedCost": 70,
+      "waterNeed": 2.8,
+      "chemFertNeed": 1.5,
+      "baseYield": 320,
+      "resilienceScore": 15,
+      "growthTimeSeconds": 260,
+      "saltTolerance": 3,
+      "droughtTolerance": 0.15,
+      "historicalNote": "India's first hybrid cotton. Needs precise irrigation timing. Fertilizer burn risk extreme without adequate water."
+    }
+  ],
+
+  "disaster": {
+    "name": "Canal Shutdown & Fertilizer Burn — जलाशय सूखा",
+    "triggerDescription": "Reservoirs hit dead storage. Canal gates close indefinitely. Chemical fertilizer crystallizes in parched soil, burning root systems. Only organic matter buffers the devastation.",
+    "mechanics": {
+      "canalShutoff": true,
+      "reservoirLevel": 0.0,
+      "fertilizerBurnThreshold": 30,
+      "organicMatterBufferMultiplier": 0.3,
+      "highSHIBonusTicks": 2,
+      "highSHIThreshold": 70,
+      "yieldPenalties": {
+        "COMMERCIAL": 0.0,
+        "INDIGENOUS": 0.55
+      },
+      "specialRules": [
+        "Canal supply drops to 0 — no canal irrigation possible",
+        "If crop.chemFertNeed > 0 AND plot.waterLevel < 30 → yield = 0 (complete fertilizer burn)",
+        "Organic matter buffers: plot.organicMatter * 0.3 extra drought survival ticks",
+        "If soilHealth > 70 → crops survive 2 extra ticks (healthy soil retains moisture)",
+        "Groundwater pumping costs 3x normal (deep aquifer stress)"
+      ]
+    }
+  },
+
+  "marketPrices": {
+    "bajra": { "base": 50, "volatility": 0.12 },
+    "jowar": { "base": 52, "volatility": 0.14 },
+    "arhar_tur": { "base": 68, "volatility": 0.20 },
+    "hyv_wheat": { "base": 95, "volatility": 0.25 },
+    "hyv_rice": { "base": 105, "volatility": 0.30 },
+    "cotton_hybrid": { "base": 120, "volatility": 0.35 }
+  }
+}
